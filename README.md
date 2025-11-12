@@ -30,3 +30,54 @@ It helps users record their daily expenses, categorize them, and visualize spend
 
 ## 🏗️ Project Architecture
 
+FinanceApp/
+│
+├── Controllers/
+│ ├── HomeController.cs
+│ ├── ExpensesController.cs
+│
+├── Models/
+│ ├── Expense.cs
+│ └── ErrorViewModel.cs
+│
+├── Data/
+│ ├── FinanceAppContext.cs
+│ ├── Service/
+│ ├── IExpensesService.cs
+│ └── ExpensesService.cs
+│
+├── Views/
+│ ├── Expenses/
+│ │ ├── Index.cshtml
+│ │ ├── Create.cshtml
+│ └── Shared/
+│ ├── _Layout.cshtml
+│
+└── wwwroot/
+├── css/
+├── js/
+├── lib/
+
+
+---
+
+## 📊 Chart.js Integration
+
+The app uses `Chart.js` to visualize expenses by category:
+
+```js
+fetch('/Expenses/GetChart')
+  .then(response => response.json())
+  .then(data => {
+    new Chart(document.getElementById('myChart'), {
+      type: 'pie',
+      data: {
+        labels: data.map(d => d.category),
+        datasets: [{
+          data: data.map(d => d.total)
+        }]
+      }
+    });
+  });
+
+
